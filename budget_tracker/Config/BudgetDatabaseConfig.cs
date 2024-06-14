@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Configuration;
+
 namespace budgetTracker.Config;
 
 public class BudgetDatabaseConfig

@@ -20,12 +20,12 @@ internal class Program
         HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
 
         IConfiguration config = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json")
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
             .AddEnvironmentVariables()
             .Build();
 
         var dbConfig = new BudgetDatabaseConfig();
-        config.Bind("BudgetDb", dbConfig);
+        config.Bind("ConnectionStrings:BudgetDb", dbConfig);
         builder.Services.AddSingleton(dbConfig);
         
         builder.Services.AddSingleton<BudgetRepository>();
