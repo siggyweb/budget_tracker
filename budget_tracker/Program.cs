@@ -13,24 +13,26 @@ internal class Program
     {
         Console.WriteLine("Starting up budget tracking application");
         ConfigureServices(args);
+        
     }
 
     private static void ConfigureServices(string[] args)
     {
         HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
 
-        IConfiguration config = new ConfigurationBuilder()
+        var configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-            .AddEnvironmentVariables()
             .Build();
-
+        
         var dbConfig = new BudgetDatabaseConfig();
-        config.Bind("ConnectionStrings:BudgetDb", dbConfig);
+        configuration.Bind("ConnectionStrings:BudgetDb", dbConfig);
         builder.Services.AddSingleton(dbConfig);
         
         builder.Services.AddSingleton<BudgetRepository>();
         builder.Services.AddOptions();
         var host = builder.Build();
         host.Run();
+        
+        
     }
 }
