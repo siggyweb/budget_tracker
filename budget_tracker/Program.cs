@@ -11,9 +11,9 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        Console.WriteLine("Starting up budget tracking application");
+        Console.WriteLine("Starting up budget tracking application.");
         ConfigureServices(args);
-        
+        Console.WriteLine("Exiting application.");
     }
 
     private static void ConfigureServices(string[] args)
@@ -32,7 +32,5 @@ internal class Program
         builder.Services.AddOptions();
         var host = builder.Build();
         host.Run();
-        
-        
     }
 }
