@@ -20,16 +20,14 @@ internal class Program
     {
         HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
 
-        var configuration = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+        builder.Configuration
+            .AddJsonFile($"appsettings{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
             .Build();
         
-        var dbConfig = new BudgetDatabaseConfig();
-        configuration.Bind("ConnectionStrings:BudgetDb", dbConfig);
-        builder.Services.AddSingleton(dbConfig);
+        var options = new ConnectionStringsOptions();
+        builder.Configuration.GetSection("ConnectionStrings").Bind(options); // configure
         
         builder.Services.AddSingleton<BudgetRepository>();
-        builder.Services.AddOptions();
         var host = builder.Build();
         host.Run();
     }
